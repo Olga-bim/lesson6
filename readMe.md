@@ -39,3 +39,7 @@ functiion play(){
 // event.target.tagName === 'BUTTON'
 //const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
 //
+
+
+Массивы в JS
+Node JS - это код в джаваскрипт но не в браузере, а отдельно. V8 - дает больше силы.

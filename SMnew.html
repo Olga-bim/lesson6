@@ -77,8 +77,7 @@
             const categoriesDiv = document.getElementById('Categories');
             categoriesDiv.innerHTML = categories.map(cat => `<button class="btn btn-secondary m-1" onclick="showProducts('${cat}')">${cat}</button>`).join("");
         }
-gfhdf\
-вотавпт
+
         // Function to show products based on selected category
         function showProducts(catName) {
             console.log(`Showing products for category: ${catName}`);
@@ -145,7 +144,7 @@ gfhdf\
 
             // Add the total number of products, total sum, cheapest product, and most expensive product
             cartDiv.innerHTML += `
-        <p><strong>Количество продуктов:</strong> ${cart.length}</p>
+        <p><strong>total products:</strong> ${cart.length}</p>
         <p><strong>Total:</strong> ${totalSum}ש''ח</p>
         <p><strong>The cheapest product:</strong> ${cheapestProduct.product} - ${cheapestProduct.price}ש''ח</p>
         <p><strong>The most expensive product:</strong> ${mostExpensiveProduct.product} - ${mostExpensiveProduct.price}ש''ח</p>

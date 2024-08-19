@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display JSON as Lists</title>
+    <style>
+        .btn {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            color: white;
+            background-color: #007bff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn" onclick="displayByCategory('home')">Home animals</button>
+    <button class="btn" onclick="displayByCategory('wild')">Wild animals</button>
+    <button class="btn" onclick="displayAll()">Show all</button>
+
+    <div id="display"></div>
+
+    <script>
+        let anim = [
+            { "categ": "home", "species": "cat" },
+            { "categ": "home", "species": "dog" },
+            { "categ": "wild", "species": "lion" },
+            { "categ": "wild", "species": "tiger" },
+            { "categ": "wild", "species": "bear" },
+            { "categ": "home", "species": "rabbit" },
+            { "categ": "home", "species": "hamster" },
+            { "categ": "wild", "species": "wolf" },
+            { "categ": "wild", "species": "elephant" },
+            { "categ": "wild", "species": "giraffe" }
+        ];
+
+        function displayByCategory(catName) {
+            const filtered = anim.filter(item => item.categ === catName);
+            displayList(filtered);
+        }
+
+        function displayAll() {
+            displayList(anim);
+        }
+
+        function displayList(data) {
+            const listHTML = `<ul>
+                ${data.map(item => `
+                    <li>${item.categ}: ${item.species}</li>`).join('')}
+            </ul>`;
+
+            document.getElementById('display').innerHTML = listHTML;
+        }
+    </script>
+</body>
+</html>

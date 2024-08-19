@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermarket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <h3>
+        <div id="Cart">Cart</div>
+    </h3>
+    <hr>
+    <div id="Categories"></div>
+    <div id="Products"></div>
+
+    <script>
+        let prod = [
+            { "categ": "milk", "prod": "yogurt", "price": "8", },
+            { "categ": "milk", "prod": "sour cream", "price": "10", },
+            { "categ": "milk", "prod": "milk", "price": "7", },
+            { "categ": "milk", "prod": "cheese", "price": "20", },
+            { "categ": "milk", "prod": "butter", "price": "12",  },
+            { "categ": "milk", "prod": "kefir", "price": "9", },
+            { "categ": "milk", "prod": "cottage cheese", "price": "14", },
+            { "categ": "milk", "prod": "cream", "price": "11", },
+            { "categ": "milk", "prod": "ice cream", "price": "13", },
+            { "categ": "milk", "prod": "condensed milk", "price": "15", },
+
+            { "categ": "bread", "prod": "baguettes", "price": "8", "img":  "./SMimg/baget" },
+            { "categ": "bread", "prod": "crispbreads", "price": "8", },
+            { "categ": "bread", "prod": "whole grain bread", "price": "9", },
+            { "categ": "bread", "prod": "rye bread", "price": "7", },
+            { "categ": "bread", "prod": "white bread", "price": "6", },
+            { "categ": "bread", "prod": "bread rolls", "price": "5", },
+            { "categ": "bread", "prod": "breadsticks", "price": "4", },
+            { "categ": "bread", "prod": "flatbread", "price": "7", },
+            { "categ": "bread", "prod": "croissant", "price": "10", },
+            { "categ": "bread", "prod": "pita bread", "price": "6", },
+
+            { "categ": "meat", "prod": "chicken", "price": "25", },
+            { "categ": "meat", "prod": "beef", "price": "25", },
+            { "categ": "meat", "prod": "pork", "price": "20", },
+            { "categ": "meat", "prod": "lamb", "price": "30", },
+            { "categ": "meat", "prod": "duck", "price": "28", },
+            { "categ": "meat", "prod": "turkey", "price": "22", },
+            { "categ": "meat", "prod": "bacon", "price": "18", },
+            { "categ": "meat", "prod": "sausage", "price": "15", },
+            { "categ": "meat", "prod": "ham", "price": "17", },
+            { "categ": "meat", "prod": "veal", "price": "27", },
+
+            { "categ": "home", "prod": "soap", "price": "15" },
+            { "categ": "home", "prod": "mop", "price": "15" },
+            { "categ": "home", "prod": "detergent", "price": "18" },
+            { "categ": "home", "prod": "dishwashing liquid", "price": "12" },
+            { "categ": "home", "prod": "cleaning cloths", "price": "8" },
+            { "categ": "home", "prod": "broom", "price": "10" },
+            { "categ": "home", "prod": "floor cleaner", "price": "14" },
+            { "categ": "home", "prod": "trash bags", "price": "9" },
+            { "categ": "home", "prod": "sponges", "price": "7" },
+            { "categ": "home", "prod": "air freshener", "price": "11" }
+        ];
+
+        let cart = [];
+
+        // Initial setup - display categories
+        showCategories();
+
+        // Function to show category buttons
+        function showCategories() {
+            console.log('Showing categories...');
+            const categories = ["milk", "bread", "meat", "home"];
+            const categoriesDiv = document.getElementById('Categories');
+            categoriesDiv.innerHTML = categories.map(cat => `<button class="btn btn-secondary m-1" onclick="showProducts('${cat}')">${cat}</button>`).join("");
+        }
+
+        // Function to show products based on selected category
+        function showProducts(catName) {
+            console.log(`Showing products for category: ${catName}`);
+            const productsDiv = document.getElementById('Products');
+            productsDiv.innerHTML = prod.filter(pr => pr.categ == catName).map(pr => `
+                <div class="card m-2" style="width: 18rem;">
+                    <img src="${pr.img}" class="card-img-top" alt="${pr.prod}">
+                    <div class="card-body">
+                        <h5 class="card-title">${pr.prod}</h5>
+                        <p class="card-text">${pr.price}ש''ח</p>
+                        <a href="#" class="btn btn-primary" onclick="addToCart('${pr.prod}', '${pr.price}')">Buy</a>
+                    </div>
+                </div>`).join("");
+        }
+
+        // Function to add products to the cart
+        function addToCart(product, price) {
+            console.log(`Adding to cart: ${product} - ${price}ש''ח`);
+            cart.push({ product, price });
+            updateCart();
+        }
+
+
+
+        // Function to update the cart display
+        function updateCart() {
+            console.log('Updating cart...');
+            const cartDiv = document.getElementById('Cart');
+
+            // Calculate total sum
+            let totalSum = 0;
+            cartDiv.innerHTML = 'Cart' + cart.map(item => {
+                totalSum += parseFloat(item.price);
+                return `<p>${item.product} - ${item.price}ש''ח</p>`;
+            }).join("");
+
+            // Add Total label and the calculated sum
+            cartDiv.innerHTML += `<p><strong>Total:</strong> ${totalSum}ש''ח</p>`;
+            console.log('Cart updated:', cart);
+        }
+
+        // Function to update the cart display
+        function updateCart() {
+            console.log('Updating cart...');
+            const cartDiv = document.getElementById('Cart');
+
+            // Calculate total sum and find cheapest and most expensive products
+            let totalSum = 0;
+            let cheapestProduct = cart[0];
+            let mostExpensiveProduct = cart[0];
+
+            cartDiv.innerHTML = 'Cart' + cart.map(item => {
+                totalSum += parseFloat(item.price);
+
+                if (parseFloat(item.price) < parseFloat(cheapestProduct.price)) {
+                    cheapestProduct = item;
+                }
+                if (parseFloat(item.price) > parseFloat(mostExpensiveProduct.price)) {
+                    mostExpensiveProduct = item;
+                }
+
+                return `<p>${item.product} - ${item.price}ש''ח</p>`;
+            }).join("");
+
+            // Add the total number of products, total sum, cheapest product, and most expensive product
+            cartDiv.innerHTML += `
+        <p><strong>Количество продуктов:</strong> ${cart.length}</p>
+        <p><strong>Total:</strong> ${totalSum}ש''ח</p>
+        <p><strong>The cheapest product:</strong> ${cheapestProduct.product} - ${cheapestProduct.price}ש''ח</p>
+        <p><strong>The most expensive product:</strong> ${mostExpensiveProduct.product} - ${mostExpensiveProduct.price}ש''ח</p>
+    `;
+
+            console.log('Cart updated:', cart);
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

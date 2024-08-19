@@ -1,0 +1,32 @@
+<body>
+    <div id="play">
+        <div id="message"></div> <!-- Сообщение будет отображаться здесь -->
+        
+        <div id="buttonContainer">
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+            <button>-</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('buttonContainer').addEventListener('click', function(event) {
+            if (event.target.tagName === 'BUTTON') {
+                // Генерация случайного цвета
+                const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                // Изменение цвета фона нажатой кнопки
+                event.target.style.backgroundColor = randomColor;
+
+                // Отображение сообщения во <div id="message">
+                document.getElementById('message').innerText = 'Next';
+            }
+        });
+    </script>
+</body>
